@@ -1,0 +1,25 @@
+{
+    "name": "ButtonDebouncer",
+    "keywords": "button,event,debounce,pushbutton,toggle",
+    "description": "Simple push button and toggle switch debounce library that reports number of clicks and length, and supports burst mode",
+    "repository": {
+        "type": "git",
+        "url": "https://bitbucket.org/danixu/buttondebouncer.git"
+    },
+    "version": "1.0.0",
+    "license": "GPL-3.0",
+    "exclude": "tests",
+    "frameworks": "arduino",
+    "platforms": ["atmelavr","espressif8266"],
+    "dependencies": [
+    ],
+    "authors": {
+        "name": "Daniel Carrasco",
+        "email": "admin@electrosoftcloud.com",
+        "url": "https://www.electrosoftcloud.com/",
+        "maintainer": true
+    },
+    "examples": [
+        "examples/*/*.ino"
+    ]
+}
