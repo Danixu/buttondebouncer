@@ -85,7 +85,6 @@ unsigned char ButtonDebouncer::loop() {
         }
         else if (millis() - _last_event > _delay)
         {
-
             _status = !_status;
 
             if (_mode == BUTTON_SWITCH)
@@ -133,24 +132,24 @@ unsigned char ButtonDebouncer::loop() {
     if (_ready && (millis() - _event_start > _repeat)) {
         _ready = false;
         _reset_count = true;
-        if (!_long_press)
-        {
-            event = EVENT_RELEASED;
-        }
+        event = EVENT_RELEASED;
         _long_press = false;
         _burst_count = 0;        
     }
 
-    if (!_ready && _status != _defaultStatus)
+    // Not compatible with button switch
+    if (_mode != BUTTON_SWITCH && !_ready && _status != _defaultStatus)
     {
         if ((millis() - _event_start > _long_press_delay) && !_long_press){
             event = EVENT_LONG_PRESSED;
+            _event_length = millis() - _event_start;
             _long_press = true;
         }
         else if ((millis() - _event_start > _burst_delay) && (((millis() - _event_start) / _burst_interval) > _burst_count))
         {
             event = EVENT_BURST;
             _burst_count = ((millis() - _event_start) / _burst_interval);
+            _event_length = millis() - _event_start;
         }
     }
 
