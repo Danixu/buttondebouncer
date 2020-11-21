@@ -32,6 +32,8 @@
 #define BUTTON_SWITCH           1
 #define BUTTON_DEFAULT_HIGH     2
 #define BUTTON_SET_PULLUP       4
+#define BUTTON_LONG_PRESS       8
+#define BUTTON_BURST            16
 
 #define DEBOUNCE_DELAY          50
 #define REPEAT_DELAY            500

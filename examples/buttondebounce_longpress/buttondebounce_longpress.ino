@@ -36,7 +36,7 @@ void callback(uint8_t pin, uint8_t event, uint8_t count, uint16_t length)
   }
 }
 
-ButtonDebouncer button = ButtonDebouncer(BUTTON_PIN, callback, BUTTON_PUSHBUTTON | BUTTON_DEFAULT_HIGH | BUTTON_SET_PULLUP, DEBOUNCE_DELAY, REPEAT_DELAY, LP_DELAY);
+ButtonDebouncer button = ButtonDebouncer(BUTTON_PIN, callback, BUTTON_PUSHBUTTON | BUTTON_DEFAULT_HIGH | BUTTON_SET_PULLUP | BUTTON_LONG_PRESS, DEBOUNCE_DELAY, REPEAT_DELAY, LP_DELAY);
 
 void setup() {
   Serial.begin(9600);

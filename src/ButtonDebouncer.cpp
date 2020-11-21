@@ -39,7 +39,7 @@ void ButtonDebouncer::_init(uint8_t pin, uint8_t mode, unsigned long delay, unsi
 
     // store configuration
     _pin = pin;
-    _mode = mode & 0x01;
+    _mode = mode;
     _defaultStatus = ((mode & BUTTON_DEFAULT_HIGH) > 0);
     _delay = delay;
     _repeat = repeat;
@@ -66,7 +66,7 @@ void ButtonDebouncer::_init(uint8_t pin, uint8_t mode, unsigned long delay, unsi
     }
     #endif // ESP8266
 
-    _status = (_mode == BUTTON_SWITCH) ? digitalRead(_pin) : _defaultStatus;
+    _status = ((_mode & BUTTON_SWITCH) > 0) ? digitalRead(_pin) : _defaultStatus;
     _last_status = _status;
 
 }
@@ -87,7 +87,7 @@ unsigned char ButtonDebouncer::loop() {
         {
             _status = !_status;
 
-            if (_mode == BUTTON_SWITCH)
+            if ((_mode & BUTTON_SWITCH) > 0)
             {
 
                 event = EVENT_CHANGED;
@@ -138,14 +138,14 @@ unsigned char ButtonDebouncer::loop() {
     }
 
     // Not compatible with button switch
-    if (_mode != BUTTON_SWITCH && !_ready && _status != _defaultStatus)
+    if ((_mode & BUTTON_SWITCH) == 0 && !_ready && _status != _defaultStatus)
     {
-        if ((millis() - _event_start > _long_press_delay) && !_long_press){
+        if ((_mode & BUTTON_LONG_PRESS) > 0 && (millis() - _event_start > _long_press_delay) && !_long_press){
             event = EVENT_LONG_PRESSED;
             _event_length = millis() - _event_start;
             _long_press = true;
         }
-        else if ((millis() - _event_start > _burst_delay) && (((millis() - _event_start) / _burst_interval) > _burst_count))
+        else if ((_mode & BUTTON_BURST) > 0 && (millis() - _event_start > _burst_delay) && (((millis() - _event_start) / _burst_interval) > _burst_count))
         {
             event = EVENT_BURST;
             _burst_count = ((millis() - _event_start) / _burst_interval);
